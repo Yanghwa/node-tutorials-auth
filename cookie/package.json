@@ -1,0 +1,10 @@
+{
+  "name": "cookie",
+  "version": "1.0.0",
+  "author": "Junghwan Yang",
+  "license": "MIT",
+  "dependencies": {
+    "cookie-parser": "^1.4.3",
+    "express": "^4.16.4"
+  }
+}
