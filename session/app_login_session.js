@@ -11,6 +11,11 @@ app.use(session({
     saveUninitialized: true
 }));
 
+app.get('/auth/logout', (req, res) => {
+    delete req.session.displayName;
+    res.redirect('/welcome');
+});
+
 app.get('/welcome', (req, res) => {
     if(req.session.displayName ) {
         res.send(`
