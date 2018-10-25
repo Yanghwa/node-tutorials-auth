@@ -11,15 +11,35 @@ app.use(session({
     saveUninitialized: true
 }));
 
+app.get('/welcome', (req, res) => {
+    if(req.session.displayName ) {
+        res.send(`
+            <h1>Hello, ${req.session.displayName}</h1>
+            <a href="/auth/logout">Logout</a>
+        `);
+    } else {
+        res.send(`
+            <h1>Welcome</h1>
+            <a href="/auth/login">Login</a>
+        `);
+    }
+});
+
 app.post('/auth/login', (req, res) => {
     //get from db but this case for test
     const usr = {
         username: 'testing',
-        password: '12'
+        password: '12',
+        displayName: 'ShowingTest'
     }
     const uname = req.body.username;
     const pwd = req.body.password;
-    uname === usr.username && pwd === usr.password ? res.redirect('/welcome') : res.send('Not Correct! <a href="/auth/login">Login</a>');
+    if(uname === usr.username && pwd === usr.password) {
+        req.session.displayName = usr.displayName;
+        res.redirect('/welcome');
+    } else {
+        res.send('Not Correct! <a href="/auth/login">Login</a>');
+    }
 });
 
 app.get('/auth/login', (req, res) => {
